@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Портфолио{% endblock %}
+
+{% block content %}
+<div class="portfolio-section">
+    <h2>Галереи:</h2>
+    {% for gallery_title, data in images.items %}
+        <div class="gallery">
+            <h3 class="gallery-title">{{ data.title }}</h3>
+            <p>{{ data.description }}</p>
+            <div class="gallery-images">
+                {% for img in data.images %}
+                    <img src="{% static img %}" alt="{{ data.title }}" class="gallery-image">
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+{% endblock %}

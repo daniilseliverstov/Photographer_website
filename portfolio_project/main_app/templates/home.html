@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div>
+    <div class="photographer-info">
+        <img src="{% static 'main_app/images/victoria.jpg' %}" alt="Фотограф Виктория" class="photographer-photo" />
+        <p>Привет! Меня зовут Виктория, и я профессиональный фотограф из Брянска.
+            С самого детства фотография была моим главным увлечением, а теперь она стала моей профессией.
+            Мой многолетний опыт позволяет мне легко находить общий язык с людьми, создавая атмосферу уюта и доверия на каждой фотосессии.
+            Я стремлюсь запечатлеть самые искренние эмоции, чтобы каждый кадр был живым, настоящим и наполненным теплом.</p>
+    </div>
+</div>
+
+<!-- Форма для выбора количества фотографий на странице -->
+<form method="GET" action="">
+    <label for="photos_per_page">Количество фотографий на странице:</label>
+    <select name="photos_per_page" id="photos_per_page" onchange="this.form.submit()">
+        <option value="6" {% if request.GET.photos_per_page == "8" %}selected{% endif %}>8</option>
+        <option value="12" {% if request.GET.photos_per_page == "16" %}selected{% endif %}>16</option>
+        <option value="18" {% if request.GET.photos_per_page == "24" %}selected{% endif %}>24</option>
+    </select>
+</form>
+
+ <!-- Пагинация -->
+<div class="pagination">
+    <span class="step-links">
+        {% if photos_main_page.has_previous %}
+            <a href="?page=1" class="pagination-link">&laquo; Первая</a>
+            <a href="?page={{ photos_main_page.previous_page_number }}" class="pagination-link">Назад</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ photos_main_page.number }} из {{ photos_main_page.paginator.num_pages }}.
+        </span>
+
+        {% if photos_main_page.has_next %}
+            <a href="?page={{ photos_main_page.next_page_number }}" class="pagination-link">Вперед</a>
+            <a href="?page={{ photos_main_page.paginator.num_pages }}" class="pagination-link">Последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<!-- Раздел фотографий -->
+<div class="photos-section">
+    <h2>Мои фотографии</h2>
+    <div class="photo-grid">
+        {% for photo in photos_main_page %}
+            <div class="photo-item">
+                <img src="{{ photo.image.url }}" alt="{{ photo.caption }}" />
+                {% if photo.caption %}
+                    <p>{{ photo.caption }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Раздел отзывов -->
+<div class="reviews-section">
+    <h2>Отзывы клиентов</h2>
+    {% for review in reviews %}
+    <div class="review">
+        <p><strong>{{ review.author }}</strong> ({{ review.date }}):</p>
+        <p>{{ review.text }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
