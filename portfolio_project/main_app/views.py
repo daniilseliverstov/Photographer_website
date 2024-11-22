@@ -22,7 +22,7 @@ def get_reviews():
             list: Список словарей с комментариями, где каждый словарь содержит
                   текст комментария, имя автора и дату.
         """
-    access_token = '7335a4057335a4057335a405eb7011978f773357335a405140c7e4da65713e480ff0133'
+    access_token = '5ea98e285ea98e285ea98e28335d8dbda255ea95ea98e2839e980cdf3a66b2436c91466'
     group_id = '-68207147'
 
     posts_url = f'https://api.vk.com/method/wall.get?owner_id={group_id}&count=5&access_token={access_token}&v=5.131'
